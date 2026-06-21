@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// FUNGSI: Ini hanya Widget Kosmetik.
+// Membuat efek gelap di luar kotak dan garis kotak pemindai ala "High-Tech" di halaman Kamera.
 class ScannerOverlay extends StatefulWidget {
   final double scanAreaSize;
   final Color overlayColor;
@@ -73,14 +75,16 @@ class ScannerOverlayPainter extends CustomPainter {
     final double width = size.width;
     final double height = size.height;
 
-    // Calculate cutout bounds
+    // Menentukan posisi kotak tengah (area transparan untuk nge-scan)
     final double left = (width - scanAreaSize) / 2;
     final double top = (height - scanAreaSize) / 2;
     final Rect cutout = Rect.fromLTWH(left, top, scanAreaSize, scanAreaSize);
 
-    // 1. Draw the semi-transparent black background outside the cutout
+    // 1. Menggambar latar belakang yang agak gelap (kamera sekitarnya)
+    // Supaya kotak tengahnya terlihat terang dan menonjol
     final Path backgroundPath = Path()..addRect(Rect.fromLTWH(0, 0, width, height));
     final Path cutoutPath = Path()..addRRect(RRect.fromRectAndRadius(cutout, const Radius.circular(20)));
+    // Membuat lubang tembus pandang di tengah
     final Path finalPath = Path.combine(PathOperation.difference, backgroundPath, cutoutPath);
     
     final Paint backgroundPaint = Paint()
@@ -89,18 +93,17 @@ class ScannerOverlayPainter extends CustomPainter {
     
     canvas.drawPath(finalPath, backgroundPaint);
 
-    // 2. Draw modern high-tech glowing corner brackets
+    // 2. Menggambar garis-garis siku di 4 pojokan kotak scan (Mirip desain High-Tech/Sci-fi)
     final Paint borderPaint = Paint()
       ..color = scanLineColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4.0
       ..strokeCap = StrokeCap.round;
 
-    const double cornerLength = 25.0;
-    const double radius = 20.0;
+    const double cornerLength = 25.0; // Panjang sisi siku
+    const double radius = 20.0;       // Lengkungan sudut siku
 
-    // Helper paths for the 4 corners
-    // Top-Left corner
+    // Pojok Kiri Atas
     canvas.drawPath(
       Path()
         ..moveTo(left, top + cornerLength)
@@ -110,7 +113,7 @@ class ScannerOverlayPainter extends CustomPainter {
       borderPaint,
     );
 
-    // Top-Right corner
+    // Pojok Kanan Atas
     canvas.drawPath(
       Path()
         ..moveTo(left + scanAreaSize - cornerLength, top)
@@ -120,7 +123,7 @@ class ScannerOverlayPainter extends CustomPainter {
       borderPaint,
     );
 
-    // Bottom-Left corner
+    // Pojok Kiri Bawah
     canvas.drawPath(
       Path()
         ..moveTo(left, top + scanAreaSize - cornerLength)
@@ -130,7 +133,7 @@ class ScannerOverlayPainter extends CustomPainter {
       borderPaint,
     );
 
-    // Bottom-Right corner
+    // Pojok Kanan Bawah
     canvas.drawPath(
       Path()
         ..moveTo(left + scanAreaSize - cornerLength, top + scanAreaSize)
@@ -140,10 +143,11 @@ class ScannerOverlayPainter extends CustomPainter {
       borderPaint,
     );
 
-    // 3. Draw a modern laser scanner line moving up and down
+    // 3. Menggambar garis Laser pemindai yang naik-turun
+    // Posisi garis Y berubah-ubah karena ada nilai animasi dari waktu ke waktu
     final double lineY = top + (scanAreaSize * animationValue);
     
-    // Create a horizontal gradient for the laser line
+    // Memberikan gradasi warna biar terlihat nyata (redup di pinggir, terang di tengah)
     final Shader laserShader = LinearGradient(
       colors: [
         scanLineColor.withOpacity(0.0),
@@ -160,10 +164,10 @@ class ScannerOverlayPainter extends CustomPainter {
       ..strokeWidth = 3.0
       ..strokeCap = StrokeCap.round;
 
-    // Draw scanning laser line
+    // Mulai menggambar garis Lasernya di atas kanvas
     canvas.drawLine(Offset(left + 8, lineY), Offset(left + scanAreaSize - 8, lineY), laserPaint);
 
-    // 4. Draw a subtle glowing backdrop below/above the laser for realism
+    // 4. Efek bayangan menyala (glowing) tipis mengikuti laser
     final Paint glowPaint = Paint()
       ..shader = LinearGradient(
         begin: Alignment.topCenter,
@@ -175,10 +179,10 @@ class ScannerOverlayPainter extends CustomPainter {
       ).createShader(Rect.fromLTWH(left, lineY - 20, scanAreaSize, 40))
       ..style = PaintingStyle.fill;
 
-    // Limit glow inside the cutout
+    // Memastikan bayangannya tidak bocor keluar batas kotak scan
     canvas.save();
     canvas.clipPath(cutoutPath);
-    // Draw the glow above or below
+    // Menggambar bayangan menyala
     canvas.drawRect(Rect.fromLTWH(left, lineY - 15, scanAreaSize, 15), glowPaint);
     canvas.restore();
   }

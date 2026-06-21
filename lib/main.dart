@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'screens/dashboard_screen.dart';
 
+// FUNGSI UTAMA: Ini adalah titik awal aplikasi berjalan (seperti pintu masuk rumah)
 void main() async {
-  // Ensure widget bindings are initialized
+  // Pastikan sistem flutter siap sebelum aplikasi jalan
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Initialize Indonesian locale formatting
+  // Format tanggal pakai bahasa Indonesia (id_ID)
   await initializeDateFormatting('id_ID', null);
   
+  // Jalankan aplikasi dengan nama AttendanceScannerApp
   runApp(const AttendanceScannerApp());
 }
 
@@ -17,11 +19,12 @@ class AttendanceScannerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // MaterialApp adalah wadah/pembungkus seluruh halaman aplikasi
     return MaterialApp(
       title: 'QR Attendance Scanner',
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false, // Sembunyikan pita "DEBUG" di pojok kanan atas
       
-      // Gorgeous Dark Theme (Default)
+      // Tema aplikasi disesuaikan dengan settingan HP (Terang/Gelap)
       themeMode: ThemeMode.system,
       
       theme: ThemeData(

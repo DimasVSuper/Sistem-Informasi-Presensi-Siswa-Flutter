@@ -1,3 +1,5 @@
+// FUNGSI: Ini adalah 'Buku Catatan' untuk merekam riwayat absen (sukses maupun gagal).
+// Data ini nanti akan disimpan di memori HP.
 class AttendanceLog {
   final String qrCode;
   final String studentName;

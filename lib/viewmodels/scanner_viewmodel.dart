@@ -9,29 +9,33 @@ class ScannerViewModel extends ChangeNotifier {
   bool isFlashOn = false;
   bool isFrontCamera = false;
 
+  // FUNGSI: Menangani kode yang baru saja berhasil discan kamera
   Future<ApiResponse> processQrCode(String qrCode) async {
-    isProcessing = true;
+    isProcessing = true; // Tahan kamera agar tidak scan terus menerus
     notifyListeners();
 
+    // 1. Kirim kode hasil scan ke server (ke Tukang / API Service)
     final response = await ApiService.submitAttendance(qrCode);
 
+    // 2. Buat catatan riwayat lokal
     final log = AttendanceLog(
       qrCode: qrCode,
       studentName: response.studentName.isNotEmpty
           ? response.studentName
           : 'Siswa',
       nis: response.nis,
-      scannedAt: DateTime.now(),
+      scannedAt: DateTime.now(), // Jam waktu di-scan
       isSuccess: response.isSuccess,
       status: response.status,
       message: response.message,
     );
 
+    // 3. Simpan riwayat tersebut ke dalam memori HP
     await StorageService.addLog(log);
 
-    isProcessing = false;
+    isProcessing = false; // Boleh scan lagi
     notifyListeners();
-    return response;
+    return response; // Kembalikan jawaban dari server (berhasil/gagal)
   }
 
   void setProcessing(bool value) {

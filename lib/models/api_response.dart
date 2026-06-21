@@ -1,3 +1,5 @@
+// FUNGSI: Ini adalah 'Cetakan' atau 'Format Baku' untuk menyimpan jawaban dari server.
+// Setiap kali aplikasi bertanya ke server, jawabannya harus dibungkus dalam bentuk ini.
 class ApiResponse {
   final bool isSuccess;
   final int statusCode;

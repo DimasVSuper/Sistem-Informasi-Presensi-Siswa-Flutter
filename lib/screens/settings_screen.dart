@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../viewmodels/settings_viewmodel.dart';
 
+// FUNGSI: Ini adalah HALAMAN PENGATURAN.
+// Digunakan untuk mengubah URL server API (misalnya IP address laptop/server berubah).
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 

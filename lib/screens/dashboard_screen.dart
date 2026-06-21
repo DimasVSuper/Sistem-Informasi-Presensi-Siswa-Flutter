@@ -4,6 +4,8 @@ import '../viewmodels/dashboard_viewmodel.dart';
 import 'scanner_screen.dart';
 import 'settings_screen.dart';
 
+// FUNGSI: Ini adalah HALAMAN UTAMA (Dashboard).
+// Menampilkan status server, tombol scan kamera, dan daftar riwayat absen hari ini.
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
@@ -20,6 +22,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
+    // Saat halaman ini pertama kali dibuka, langsung suruh Pelayan (ViewModel) ambil data
     _viewModel = DashboardViewModel()..loadDashboardData();
   }
 
@@ -118,14 +121,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                     const SizedBox(height: 20),
 
+                    // TOMBOL SCANNER BESAR
                     GestureDetector(
                       onTap: () {
+                        // Kalau ditekan, pindah ke halaman Scanner (Kamera)
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const ScannerScreen(),
                           ),
-                        ).then((_) => _viewModel.loadDashboardData());
+                        ).then((_) => _viewModel.loadDashboardData()); // Update data kalau sudah balik dari scanner
                       },
                       child: Container(
                         height: 180,

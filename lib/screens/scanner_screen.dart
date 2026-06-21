@@ -6,6 +6,8 @@ import '../models/api_response.dart';
 import '../viewmodels/scanner_viewmodel.dart';
 import '../widgets/scanner_overlay.dart';
 
+// FUNGSI: Ini adalah HALAMAN KAMERA (Scanner).
+// Tempat pengguna mengarahkan HP ke kartu QR siswa.
 class ScannerScreen extends StatefulWidget {
   const ScannerScreen({super.key});
 
@@ -32,8 +34,9 @@ class _ScannerScreenState extends State<ScannerScreen> {
     super.dispose();
   }
 
+  // FUNGSI: Otomatis terpanggil kalau kamera berhasil mendeteksi/menangkap QR Code
   void _onDetect(BarcodeCapture capture) {
-    if (_viewModel.isProcessing) return;
+    if (_viewModel.isProcessing) return; // Jangan scan berulang-ulang kalau masih proses
 
     final List<Barcode> barcodes = capture.barcodes;
     if (barcodes.isEmpty) return;
@@ -41,8 +44,8 @@ class _ScannerScreenState extends State<ScannerScreen> {
     final String? qrCode = barcodes.first.rawValue;
     if (qrCode == null || qrCode.trim().isEmpty) return;
 
-    HapticFeedback.vibrate();
-    _processQrCode(qrCode);
+    HapticFeedback.vibrate(); // HP getar sedikit menandakan sukses scan
+    _processQrCode(qrCode); // Lanjut ke proses pengiriman data
   }
 
   Future<void> _processQrCode(String qrCode) async {
@@ -52,6 +55,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
     }
   }
 
+  // FUNGSI: Menampilkan jendela pop-up hasil dari bawah layar (Sukses/Gagal)
   void _showResultBottomSheet(ApiResponse response, String qrCode) {
     Color primaryColor;
     IconData statusIcon;
