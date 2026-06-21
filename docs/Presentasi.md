@@ -39,12 +39,13 @@ Aplikasi mobile Flutter untuk presensi siswa berbasis QR Code yang terhubung ke 
 
 ---
 
-## Slide 6 — Alur Kerja Aplikasi
-1. Pengguna membuka menu scanner.
-2. Aplikasi memindai QR Code siswa.
-3. Data dikirim ke backend Laravel melalui API.
-4. Hasil respon ditampilkan ke pengguna.
-5. Riwayat scan disimpan lokal untuk referensi.
+## Slide 6 — Alur Kerja Aplikasi (Workflow)
+*(Detail penjelasan teknis bisa dilihat di dokumen `docs/flow.md`)*
+1. Pengguna membuka menu scanner (`dashboard_screen.dart` -> `scanner_screen.dart`).
+2. Kamera memindai QR Code siswa.
+3. Data dikirim ke backend Laravel melalui API (`api_service.dart`).
+4. Hasil respon ditampilkan ke pengguna dalam bentuk *bottom sheet*.
+5. Riwayat scan disimpan secara lokal di memori HP (`storage_service.dart`).
 
 ---
 
@@ -71,7 +72,13 @@ PresensiGo (Mobile Version) adalah solusi mobile presensi berbasis QR Code yang 
 
 ---
 
-## Slide 10 — Penutup
+## Slide 10 — Penutup & Tanya Jawab
 Terima kasih.
 
-Jika diperlukan, presentasi ini dapat diperluas menjadi versi lebih formal, lebih singkat, atau disesuaikan untuk demo live.
+---
+### 📚 Referensi Tambahan untuk Kelompok:
+Pastikan kalian juga membaca dokumen-dokumen berikut sebelum presentasi:
+- 👉 **[Contekan Tanya Jawab Dosen](contekan_presentasi.md)** (Sangat penting dibaca!)
+- 👉 **[Alur Koding Aplikasi](flow.md)** (Untuk menjelaskan cara kerja aplikasi)
+- 👉 **[Dokumentasi API](API.md)** (Jika ditanya format JSON)
+- 👉 **[Panduan Koneksi Server](panduan_koneksi.md)** (Cara menyambungkan HP ke Laptop/Ngrok)
