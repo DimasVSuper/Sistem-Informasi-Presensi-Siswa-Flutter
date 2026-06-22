@@ -56,6 +56,18 @@ Aplikasi menggunakan `SharedPreferences` untuk menyimpan endpoint API. Buka menu
 http://192.168.1.100:8000/api
 ```
 
+bila menggunakan NGROK
+
+```text
+http://{Link NGROK}
+```
+
+atau menggunakan Domain sendiri
+
+```text
+http://{xxxxxxx.com/api}
+```
+
 Setelah menyimpan URL, gunakan tombol `Tes Koneksi` untuk memastikan aplikasi dapat terhubung ke backend.
 
 ## Catatan Penting
